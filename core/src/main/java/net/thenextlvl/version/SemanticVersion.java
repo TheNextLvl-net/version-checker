@@ -1,5 +1,6 @@
 package net.thenextlvl.version;
 
+import org.jetbrains.annotations.Contract;
 import org.jspecify.annotations.Nullable;
 
 import java.util.Objects;
@@ -22,6 +23,7 @@ public record SemanticVersion(int major, int minor, int patch, @Nullable String 
      * @param string the version string to parse
      * @return the parsed SemanticVersion object, or null if it is not a valid SemVer
      */
+    @Contract(value = "_ -> new", pure = true)
     public static SemanticVersion parse(String string) {
         var parts = string.split("-", 2);
         var split = parts[0].split("\\.", 3);
@@ -38,6 +40,7 @@ public record SemanticVersion(int major, int minor, int patch, @Nullable String 
      * @return a negative integer, zero, or a positive integer if this version is less than, equal to, or greater than the specified version
      */
     @Override
+    @Contract(pure = true)
     public int compareTo(Version version) {
         return major() != version.major() ? Integer.compare(major(), version.major())
                 : minor() != version.minor() ? Integer.compare(minor(), version.minor())
@@ -55,6 +58,7 @@ public record SemanticVersion(int major, int minor, int patch, @Nullable String 
      * @return a string representation of the semantic version
      */
     @Override
+    @Contract(pure = true)
     public String toString() {
         var string = major() + "." + minor() + "." + patch();
         return preRelease() != null ? string + "-" + preRelease() : string;

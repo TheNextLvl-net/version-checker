@@ -1,5 +1,8 @@
 package net.thenextlvl.version;
 
+import org.jetbrains.annotations.CheckReturnValue;
+import org.jetbrains.annotations.Contract;
+
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
@@ -10,6 +13,7 @@ public interface VersionChecker<N, V extends Version> {
      *
      * @return the version of the currently running software
      */
+    @Contract(pure = true)
     V getVersionRunning();
 
     /**
@@ -18,6 +22,7 @@ public interface VersionChecker<N, V extends Version> {
      * @param version the version to parse
      * @return the parsed version of type V
      */
+    @Contract(value = "_ -> new", pure = true)
     V parseVersion(N version);
 
     /**
@@ -26,6 +31,7 @@ public interface VersionChecker<N, V extends Version> {
      * @param version the version to parse
      * @return the parsed version of type V
      */
+    @Contract(value = "_ -> new", pure = true)
     V parseVersion(String version);
 
     /**
@@ -34,6 +40,7 @@ public interface VersionChecker<N, V extends Version> {
      * @param version the version to check
      * @return true if the version is supported, false otherwise
      */
+    @Contract(pure = true)
     boolean isSupported(N version);
 
     /**
@@ -41,6 +48,7 @@ public interface VersionChecker<N, V extends Version> {
      *
      * @return a CompletableFuture containing the latest version
      */
+    @CheckReturnValue
     CompletableFuture<V> retrieveLatestVersion();
 
     /**
@@ -48,6 +56,7 @@ public interface VersionChecker<N, V extends Version> {
      *
      * @return a CompletableFuture containing the latest supported version
      */
+    @CheckReturnValue
     CompletableFuture<Optional<V>> retrieveLatestSupportedVersion();
 
     /**
@@ -55,6 +64,7 @@ public interface VersionChecker<N, V extends Version> {
      *
      * @return a CompletableFuture containing a Set of all versions
      */
+    @CheckReturnValue
     CompletableFuture<Set<V>> retrieveVersions();
 
     /**
@@ -62,6 +72,7 @@ public interface VersionChecker<N, V extends Version> {
      *
      * @return an unmodifiable {@code Set} of supported versions
      */
+    @CheckReturnValue
     Set<V> getSupportedVersions();
 
     /**
@@ -69,6 +80,7 @@ public interface VersionChecker<N, V extends Version> {
      *
      * @return an unmodifiable {@code Set} of all available versions
      */
+    @CheckReturnValue
     Set<V> getVersions();
 
     /**
@@ -78,6 +90,7 @@ public interface VersionChecker<N, V extends Version> {
      * if available, or an empty {@code Optional} if no supported version
      * is found or if it has not been queried yet.
      */
+    @CheckReturnValue
     Optional<V> getLatestSupportedVersion();
 
     /**
@@ -87,5 +100,6 @@ public interface VersionChecker<N, V extends Version> {
      * or an empty {@code Optional} if there is no available version
      * or if it has not been queried yet.
      */
+    @CheckReturnValue
     Optional<V> getLatestVersion();
 }

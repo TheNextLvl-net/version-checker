@@ -1,5 +1,6 @@
 package net.thenextlvl.version;
 
+import org.jetbrains.annotations.Contract;
 import org.jspecify.annotations.Nullable;
 
 /**
@@ -13,6 +14,7 @@ public interface Version extends Comparable<Version> {
      *
      * @return the major component of the version
      */
+    @Contract(pure = true)
     int major();
 
     /**
@@ -20,6 +22,7 @@ public interface Version extends Comparable<Version> {
      *
      * @return the minor component of the version
      */
+    @Contract(pure = true)
     int minor();
 
     /**
@@ -27,6 +30,7 @@ public interface Version extends Comparable<Version> {
      *
      * @return the patch component of the version
      */
+    @Contract(pure = true)
     int patch();
 
     /**
@@ -35,5 +39,6 @@ public interface Version extends Comparable<Version> {
      * @return the pre-release tag of the version, or null if there is no pre-release tag
      */
     @Nullable
+    @Contract(pure = true)
     String preRelease();
 }
