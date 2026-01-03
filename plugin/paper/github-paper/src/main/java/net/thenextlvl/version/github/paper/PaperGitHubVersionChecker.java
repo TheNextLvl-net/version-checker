@@ -26,7 +26,7 @@ public abstract class PaperGitHubVersionChecker<V extends Version> extends GitHu
     @Override
     public void checkLatestVersion() {
         retrieveLatestVersion().thenAccept(this::printVersionInfo).exceptionally(throwable -> {
-            plugin.getComponentLogger().warn("There are no public releases for this plugin yet");
+            plugin.getComponentLogger().warn("There are no compatible releases of this plugin for your server version");
             return null;
         });
     }
@@ -35,7 +35,7 @@ public abstract class PaperGitHubVersionChecker<V extends Version> extends GitHu
     public void checkVersion() {
         retrieveLatestSupportedVersion().thenAccept(optional -> optional.ifPresentOrElse(this::printVersionInfo,
                 () -> retrieveLatestVersion().thenAccept(this::printUnsupportedInfo).exceptionally(throwable -> {
-                    plugin.getComponentLogger().warn("There are no public releases for this plugin yet");
+                    plugin.getComponentLogger().warn("There are no compatible releases of this plugin for your server version");
                     return null;
                 })
         )).exceptionally(throwable -> {
