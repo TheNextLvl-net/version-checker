@@ -89,7 +89,12 @@ public abstract class PaperModrinthVersionChecker<V extends Version> extends Mod
     public String getLoader() {
         return "paper";
     }
-    
+
+    @Override
+    protected String getVersionQuery() {
+        return "version?loaders=[\"" + getLoader() + "\"]&game_versions=[\"" + plugin.getServer().getMinecraftVersion() + "\"]";
+    }
+
     @Override
     public boolean isSupported(ModrinthVersion version) {
         return version.gameVersions().contains(plugin.getServer().getMinecraftVersion())
