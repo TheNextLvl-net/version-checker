@@ -130,6 +130,6 @@ public abstract class ModrinthVersionChecker<V extends Version> implements Versi
                         .replace("]", "%5D")
                         .replace("\"", "%22")))
                 .build(), HttpResponse.BodyHandlers.ofString()
-        ).orTimeout(10, TimeUnit.SECONDS);
+        ).orTimeout(1, TimeUnit.MINUTES);
     }
 }

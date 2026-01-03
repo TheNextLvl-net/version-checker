@@ -3,8 +3,6 @@ package net.thenextlvl.version.modrinth;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.concurrent.TimeUnit;
-
 public final class ModrinthTest {
     private static final ModrinthSemanticVersionChecker versionChecker = new ModrinthSemanticVersionChecker("gBIw3Gvy");
 
