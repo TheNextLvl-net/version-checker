@@ -14,6 +14,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -124,11 +125,11 @@ public abstract class ModrinthVersionChecker<V extends Version> implements Versi
 
     private CompletableFuture<HttpResponse<String>> get(String path) {
         return client.sendAsync(HttpRequest.newBuilder()
-                        .uri(URI.create(API_URL.formatted(getId()) + path
-                                .replace("[", "%5B")
-                                .replace("]", "%5D")
-                                .replace("\"", "%22")))
-                        .build(),
-                HttpResponse.BodyHandlers.ofString());
+                .uri(URI.create(API_URL.formatted(getId()) + path
+                        .replace("[", "%5B")
+                        .replace("]", "%5D")
+                        .replace("\"", "%22")))
+                .build(), HttpResponse.BodyHandlers.ofString()
+        ).orTimeout(10, TimeUnit.SECONDS);
     }
 }
