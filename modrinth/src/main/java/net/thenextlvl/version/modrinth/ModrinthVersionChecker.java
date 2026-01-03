@@ -124,7 +124,10 @@ public abstract class ModrinthVersionChecker<V extends Version> implements Versi
 
     private CompletableFuture<HttpResponse<String>> get(String path) {
         return client.sendAsync(HttpRequest.newBuilder()
-                        .uri(URI.create(API_URL.formatted(getId()) + path))
+                        .uri(URI.create(API_URL.formatted(getId()) + path
+                                .replace("[", "%5B")
+                                .replace("]", "%5D")
+                                .replace("\"", "%22")))
                         .build(),
                 HttpResponse.BodyHandlers.ofString());
     }
