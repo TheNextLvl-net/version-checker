@@ -75,7 +75,7 @@ public abstract class PaperModrinthVersionChecker<V extends Version> extends Mod
         } else if (version.compareTo(versionRunning) > 0) {
             logger.warn("An update for {} is available", plugin.getName());
             logger.warn("You are running version {}, the latest version is {}", versionRunning, version);
-            logger.warn("Update at https://modrinth.com/project/{}/?version={}&loader={}#download", getId(), 
+            logger.warn("Update at https://modrinth.com/project/{}/?version={}&loader={}#download", getId(),
                     plugin.getServer().getMinecraftVersion(), getLoader());
             logger.warn("Do not test in production and always make backups before updating");
         } else logger.warn("You are running a snapshot version of {}", plugin.getName());
@@ -83,7 +83,7 @@ public abstract class PaperModrinthVersionChecker<V extends Version> extends Mod
 
     /**
      * Retrieves the loader type associated with this checker.
-     * 
+     *
      * @return the server loader type
      */
     public String getLoader() {
@@ -98,7 +98,7 @@ public abstract class PaperModrinthVersionChecker<V extends Version> extends Mod
     @Override
     public boolean isSupported(ModrinthVersion version) {
         return version.gameVersions().contains(plugin.getServer().getMinecraftVersion())
-               && version.loaders().contains(getLoader());
+                && version.loaders().contains(getLoader());
     }
 
     @Override
