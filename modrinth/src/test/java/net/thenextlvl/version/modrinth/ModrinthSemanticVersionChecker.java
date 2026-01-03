@@ -21,4 +21,9 @@ final class ModrinthSemanticVersionChecker extends ModrinthVersionChecker<Semant
     public boolean isSupported(ModrinthVersion version) {
         return true;
     }
+
+    @Override
+    protected String getVersionQuery() {
+        return "version?loaders=[\"paper\"]&game_versions=[\"1.21.11\"]";
+    }
 }

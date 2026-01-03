@@ -108,14 +108,26 @@ public abstract class ModrinthVersionChecker<V extends Version> implements Versi
         return parseVersion(version.name());
     }
 
+    protected String getVersionQuery() {
+        return "version";
+    }
+
     public final CompletableFuture<Set<ModrinthVersion>> retrieveModrinthVersions() {
-        return get("version").thenApply(response ->
-                this.versions = Objects.requireNonNullElse(gson.fromJson(response.body(), ModrinthVersions.class), this.versions));
+        return get(getVersionQuery()).thenApply(response -> {
+            if (response.statusCode() != 200) throw new IllegalStateException(
+                    "Server responded with status code %s: %s".formatted(response.statusCode(), response.body())
+            );
+            this.versions = Objects.requireNonNullElse(gson.fromJson(response.body(), ModrinthVersions.class), this.versions);
+            return this.versions;
+        });
     }
 
     private CompletableFuture<HttpResponse<String>> get(String path) {
         return client.sendAsync(HttpRequest.newBuilder()
-                        .uri(URI.create(API_URL.formatted(getId()) + path))
+                        .uri(URI.create(API_URL.formatted(getId()) + path
+                                .replace("[", "%5B")
+                                .replace("]", "%5D")
+                                .replace("\"", "%22")))
                         .build(),
                 HttpResponse.BodyHandlers.ofString());
     }
