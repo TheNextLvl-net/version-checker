@@ -37,7 +37,8 @@ public abstract class PaperModrinthVersionChecker<V extends Version> extends Mod
                     return null;
                 })
         )).exceptionally(throwable -> {
-            plugin.getComponentLogger().error("Version check failed", throwable);
+            var t = throwable.getCause() != null ? throwable.getCause() : throwable;
+            plugin.getComponentLogger().error("Version check failed", t);
             return null;
         });
     }
